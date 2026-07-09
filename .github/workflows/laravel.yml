@@ -91,3 +91,10 @@ jobs:
         run: |
           echo "Ovaj workflow se izvršava na main grani."
           echo "Main grana se u našem primjeru smatra produkcijskom granom."
+
+ # NOVO U FAZI 6: Izvršava se samo ako commit poruka sadrži riječ "deploy"
+      - name: Commit sadrži riječ deploy
+        if: contains(github.event.head_commit.message, 'deploy')
+        run: |
+          echo "Commit poruka sadrži riječ deploy."
+          echo "Poruka commita: ${{ github.event.head_commit.message }}"
