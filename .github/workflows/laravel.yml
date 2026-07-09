@@ -45,6 +45,10 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
         run: php artisan migrate --force
+
+
+      - name: Clear Laravel cache
+        run: php artisan optimize
     
         # NOVO: Pokretanje svih Laravel/PHPUnit testova
       - name: Run PHPUnit tests
