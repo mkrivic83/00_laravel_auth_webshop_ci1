@@ -33,3 +33,12 @@ jobs:
 
       - name: Build Vite assets
         run: npm run build
+
+      - name: Verify Laravel application
+        run: php artisan --version
+
+      - name: Run database migrations
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+        run: php artisan migrate --force
