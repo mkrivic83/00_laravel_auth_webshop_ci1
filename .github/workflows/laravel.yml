@@ -59,6 +59,7 @@ jobs:
           echo "================================="
           echo " CI PASSED "
           echo " Projekt je spreman za Railway "
+          echo " Datum ";
           echo "================================="
 
 # NOVO U FAZI 6: Izvršava se samo ako je neki prethodni korak pao
@@ -82,3 +83,11 @@ jobs:
           echo " Committer  : ${{ github.actor }}"
           echo " Commit SHA : ${{ github.sha }}"
           echo "===================================="
+
+
+      # NOVO U FAZI 6: Izvršava se samo ako se radi o main grani
+      - name: Produkcijska grana
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Ovaj workflow se izvršava na main grani."
+          echo "Main grana se u našem primjeru smatra produkcijskom granom."
