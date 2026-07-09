@@ -11,18 +11,50 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden sm:-my-px sm:ms-10 sm:flex sm:items-center sm:space-x-6">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 @can('admin-access')
-                    <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.index')">
-                        {{ __('Korisnici') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('admin.users.indexPaginated')" :active="request()->routeIs('admin.users.indexPaginated')">
-                        {{ __('Korisnici paginated') }}
-                    </x-nav-link>
-                @endcan
+        <div
+            x-data="{ openUsers: false }"
+            class="relative"
+        >
+            <button
+                type="button"
+                @click="openUsers = ! openUsers"
+                @click.away="openUsers = false"
+                class="inline-flex items-center px-1 pt-1 text-xs font-medium leading-5 text-gray-500 hover:text-gray-700 focus:outline-none transition"
+            >
+                Korisnici
+
+                <i class="bi bi-chevron-down ms-1 text-[10px]"></i>
+            </button>
+
+            <div
+                x-show="openUsers"
+                x-transition
+                class="absolute z-50 mt-2 w-56 rounded-md bg-white shadow-lg border border-gray-100"
+                style="display: none;"
+            >
+                <div class="py-1">
+                    <a
+                        href="{{ route('admin.users.index') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                        Popis korisnika
+                    </a>
+
+                    <a
+                        href="{{ route('admin.users.indexPaginated') }}"
+                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                    >
+                        Korisnici paginacija
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endcan
                 <x-nav-link :href="route('categories.index')" :active="request()->routeIs('categories.index')">
                         {{ __('Kategorije') }}
                 </x-nav-link>
