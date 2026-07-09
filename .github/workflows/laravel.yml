@@ -27,3 +27,6 @@ jobs:
 
       - name: Generate application key
         run: php artisan key:generate
+
+      - name: Build Vite assets
+        run: npm run build
