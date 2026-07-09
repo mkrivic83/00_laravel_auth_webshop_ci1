@@ -61,3 +61,12 @@ jobs:
           echo " Projekt je spreman za Railway "
           echo "================================="
 
+# NOVO U FAZI 6: Izvršava se samo ako je neki prethodni korak pao
+      - name: CI nije prošao
+        if: failure()
+        run: |
+          echo "================================="
+          echo " CI FAILED "
+          echo " Potrebno je provjeriti logove "
+          echo " Railway neće deployati ovu verziju "
+          echo "================================="
