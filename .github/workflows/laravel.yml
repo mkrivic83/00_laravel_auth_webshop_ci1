@@ -42,3 +42,10 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
         run: php artisan migrate --force
+    
+        # NOVO: Pokretanje svih Laravel/PHPUnit testova
+      - name: Run PHPUnit tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+        run: php artisan test
