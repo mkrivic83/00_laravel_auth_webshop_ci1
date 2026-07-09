@@ -1,0 +1,104 @@
+name: Laravel CI
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+            php-version: '8.3'
+            extensions: mbstring, dom, fileinfo, sqlite3, pdo_sqlite
+            coverage: none
+
+      - name: Install Composer dependencies
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Copy .env
+        run: cp .env.example .env
+
+      - name: Generate application key
+        run: php artisan key:generate
+
+      - name: Build Vite assets
+        run: npm run build
+
+      - name: Verify Laravel application
+        run: php artisan --version
+
+      - name: Run database migrations
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+        run: php artisan migrate --force
+    
+        # NOVO: Pokretanje svih Laravel/PHPUnit testova
+      - name: Run PHPUnit tests
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ":memory:"
+        run: php artisan test
+
+      - name: CI uspješan
+        if: success()
+        run: |
+          echo "================================="
+          echo " CI PASSED "
+          echo " Projekt je spreman za Railway "
+          echo " Datum ";
+          echo "================================="
+
+# NOVO U FAZI 6: Izvršava se samo ako je neki prethodni korak pao
+      - name: CI nije prošao
+        if: failure()
+        run: |
+          echo "================================="
+          echo " CI FAILED "
+          echo " Potrebno je provjeriti logove "
+          echo " Railway neće deployati ovu verziju "
+          echo "================================="
+
+      # NOVO U FAZI 6: Uvijek se izvršava, bez obzira je li CI prošao ili pao
+      - name: Završna statistika
+        if: always()
+        run: |
+          echo "===================================="
+          echo " Laravel CI završio "
+          echo " Repository : ${{ github.repository }}"
+          echo " Branch     : ${{ github.ref_name }}"
+          echo " Committer  : ${{ github.actor }}"
+          echo " Commit SHA : ${{ github.sha }}"
+          echo "===================================="
+
+
+      # NOVO U FAZI 6: Izvršava se samo ako se radi o main grani
+      - name: Produkcijska grana
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Ovaj workflow se izvršava na main grani."
+          echo "Main grana se u našem primjeru smatra produkcijskom granom."
+
+
+      - name: Release grana
+        if: github.ref == 'refs/heads/release-candidate'
+        run: |
+          echo "Ovaj workflow se izvršava na release-candidate grani."
+          echo "Main grana se u našem primjeru smatra release-candidate granom."          
+
+ # NOVO U FAZI 6: Izvršava se samo ako commit poruka sadrži riječ "deploy"
+      - name: Commit sadrži riječ deploy
+        if: contains(github.event.head_commit.message, 'deploy')
+        run: |
+          echo "Commit poruka sadrži riječ deploy."
+          echo "Poruka commita: ${{ github.event.head_commit.message }}"
