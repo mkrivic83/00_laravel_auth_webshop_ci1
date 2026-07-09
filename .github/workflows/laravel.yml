@@ -70,3 +70,15 @@ jobs:
           echo " Potrebno je provjeriti logove "
           echo " Railway neće deployati ovu verziju "
           echo "================================="
+
+      # NOVO U FAZI 6: Uvijek se izvršava, bez obzira je li CI prošao ili pao
+      - name: Završna statistika
+        if: always()
+        run: |
+          echo "===================================="
+          echo " Laravel CI završio "
+          echo " Repository : ${{ github.repository }}"
+          echo " Branch     : ${{ github.ref_name }}"
+          echo " Committer  : ${{ github.actor }}"
+          echo " Commit SHA : ${{ github.sha }}"
+          echo "===================================="
