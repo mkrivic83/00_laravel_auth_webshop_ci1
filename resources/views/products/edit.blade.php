@@ -13,7 +13,7 @@
 
                 <form
                     action="{{ route('products.update', $product) }}"
-                    method="POST"
+                    method="POST" enctype="multipart/form-data"
                 >
                     @csrf
                     @method('PUT')
@@ -101,6 +101,54 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4">
+                        <x-input-label
+                            for="slika"
+                            value="Slika proizvoda"
+                            class="mb-1"
+                        />
+
+                        @if ($product->slika)
+                            <div class="mb-4 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                                <p class="mb-2 text-sm font-semibold text-gray-700">
+                                    Trenutna slika
+                                </p>
+
+                                <img
+                                    src="{{ route('products.image', $product) }}"
+                                    alt="Slika proizvoda {{ $product->naziv }}"
+                                    class="h-48 w-auto rounded-lg border border-gray-300 object-contain shadow-sm"
+                                >
+                            </div>
+                        @else
+                            <div class="mb-4 rounded-md bg-gray-100 p-3 text-sm text-gray-600">
+                                Proizvod trenutačno nema spremljenu sliku.
+                            </div>
+                        @endif
+
+                        <input
+                            id="slika"
+                            type="file"
+                            name="slika"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            class="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm"
+                        >
+
+                        @if ($product->slika)
+                            <p class="mt-1 text-xs text-gray-500">
+                                Odabirom nove datoteke postojeća slika bit će zamijenjena.
+                            </p>
+                        @else
+                            <p class="mt-1 text-xs text-gray-500">
+                                Dopušteni formati: JPG, JPEG, PNG i WEBP. Najveća veličina: 2 MB.
+                            </p>
+                        @endif
+
+                        <x-input-error
+                            :messages="$errors->get('slika')"
+                            class="mt-2"
+                        />
+                    </div>
                     <button
                         type="submit"
                         class="bg-blue-600 text-white px-4 py-2 rounded"
@@ -108,6 +156,7 @@
                         Ažuriraj
                     </button>
 
+                    
                 </form>
 
             </div>

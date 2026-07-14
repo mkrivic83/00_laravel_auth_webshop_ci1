@@ -13,7 +13,7 @@
 
                 <form
                     action="{{ route('products.store') }}"
-                    method="POST"
+                    method="POST" enctype="multipart/form-data"
                 >
                     @csrf
 
@@ -100,6 +100,30 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4">
+                        <x-input-label
+                            for="slika"
+                            value="Slika proizvoda"
+                            class="mb-1"
+                        />
+
+                        <input
+                            id="slika"
+                            type="file"
+                            name="slika"
+                            accept=".jpg,.jpeg,.png,.webp"
+                            class="block w-full rounded-md border border-gray-300 bg-white p-2 text-sm shadow-sm"
+                        >
+
+                        <p class="mt-1 text-xs text-gray-500">
+                            Dopušteni formati: JPG, JPEG, PNG i WEBP. Najveća veličina: 2 MB.
+                        </p>
+
+                        <x-input-error
+                            :messages="$errors->get('slika')"
+                            class="mt-2"
+                        />
+                    </div>
                     <button
                         type="submit"
                         class="bg-blue-600 text-white px-4 py-2 rounded"

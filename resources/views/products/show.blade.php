@@ -40,8 +40,25 @@
                         </tr>
                         <td>Ažuriran</td>
                             <td>{{ $product->updated_at?->format('d.m.Y H:i:s')}}</td>
+                        </tr>
+                        <tr>
+                            <td>Slika</td>
+                            <td>
+                            @if ($product->slika)
+                                <img
+                                    src="{{ asset('storage/' . $product->slika) }}"
+                                    alt="{{ $product->naziv }}"
+                                    class="h-14 w-20 rounded border border-gray-200 object-cover"
+                                >
+                            @else
+                                <span class="text-xs text-gray-400">
+                                    Nema slike
+                                </span>
+                            @endif
+                        </td>
                         </tr>                                                                    
                     </table>
+                    
                     <div class="mt-6 flex gap-4">
                         <a href="{{ route('products.index') }}" class="bg-gray-500 text-white px-4 py-2 rounded">
                             Povratak
