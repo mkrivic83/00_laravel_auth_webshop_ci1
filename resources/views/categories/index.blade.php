@@ -39,6 +39,7 @@
                                     <th>Detalji</th>
                                     <th>Kreirana</th>
                                     <th>Ažurirana</th>
+                                    <th>Aktivna</th>
                                     @can('admin-access')
                                     <th>Akcije</th>
                                     @endcan
@@ -59,6 +60,7 @@
                                     </td>
                                     <td>{{ $category->created_at?->format('d.m.Y H:i:s') }}</td>
                                     <td>{{ $category->updated_at?->format('d.m.Y H:i:s') }}</td>
+                                    <td>{{ $category->active ? 'Da' : 'Ne' }}</td>
                                     @can('admin-access')
                                     <td>
                                         <div class="action-buttons">
