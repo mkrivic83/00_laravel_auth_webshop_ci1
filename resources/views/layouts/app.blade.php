@@ -50,6 +50,19 @@
                 <strong>Korisnik:</strong>
                 <span class="font-mono">{{ config('app.korisnik') }}</span>
                 &nbsp;|&nbsp;
+
+                <strong>Verzija:</strong>
+                <span class="font-mono">{{ config('app.version') }}</span>
+
+                <span class="mx-2">|</span>
+
+                <strong>Build:</strong>
+                <span class="font-mono">{{ config('app.build') }}</span>
+
+                <span class="mx-2">|</span>
+
+                <strong>Commit:</strong>
+                <span class="font-mono">{{ config('app.commit') }}</span>
             </div>
         </footer>
     </body>

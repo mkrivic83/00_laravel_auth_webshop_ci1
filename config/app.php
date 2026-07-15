@@ -123,6 +123,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'korisnik' => env('APP_KORISNIK','Nepoznato')
+    'korisnik' => env('APP_KORISNIK','Nepoznato'),
+    'build' => env('APP_BUILD', 'local'),
+    'commit' => env('APP_COMMIT', 'local'),
 
 ];

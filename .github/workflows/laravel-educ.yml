@@ -53,6 +53,37 @@ jobs:
           DB_DATABASE: ":memory:"
         run: php artisan test
 
+       # NOVO: Automatski generira oznake builda
+      - name: Generate EDUC build information
+        if: success()
+        run: |
+          echo "APP_BUILD=educ-${{ github.run_number }}" >> "$GITHUB_ENV"
+          echo "APP_COMMIT=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
+
+      # NOVO: Instalira Railway CLI
+      - name: Install Railway CLI
+        if: success()
+        run: npm install -g @railway/cli
+
+      # NOVO: Ažurira Railway environment varijable
+      - name: Update Railway EDUC build number
+        if: success()
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          railway variable set \
+            --service "00_laravel_auth_webshop_ci1" \
+            --environment "educ" \
+            APP_BUILD="$APP_BUILD" \
+            APP_COMMIT="$APP_COMMIT"
+
+      - name: EDUC CI uspješan
+        if: success()
+        run: |
+          echo "EDUC CI je prošao."
+          echo "Build: $APP_BUILD"
+          echo "Commit: $APP_COMMIT"
+
       - name: CI uspješan
         if: success()
         run: |
