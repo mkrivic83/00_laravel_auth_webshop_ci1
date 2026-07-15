@@ -61,7 +61,7 @@
 
                 <span class="mx-2">|</span>
 
-                <strong>Committt:</strong>
+                <strong>Committtttt:</strong>
                 <span class="font-mono">{{ config('app.commit') }}</span>
             </div>
         </footer>
