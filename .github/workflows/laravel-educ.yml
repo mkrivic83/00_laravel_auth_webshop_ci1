@@ -60,6 +60,27 @@ jobs:
           echo "APP_BUILD=educ-${{ github.run_number }}" >> "$GITHUB_ENV"
           echo "APP_COMMIT=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
 
+      #ČITANJE RAILWAY VARIJABLI
+      - name: Railway Read APP_VERSION
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+
+          echo "===== TEST 1 ====="
+          railway variable list \
+            --service "00_laravel_auth_webshop_ci1" \
+            --environment "educ"
+
+          echo "===== TEST 2 ====="
+          railway variable list \
+            --service "00_laravel_auth_webshop_ci1" \
+            --environment "educ" --json
+
+          echo "===== TEST 3 ====="
+          railway variable list \
+            --service "00_laravel_auth_webshop_ci1" \
+            --environment "educ" --kv
+
 
       # NOVO: Čita VERSION datoteku iz Git repozitorija
       - name: Read VERSION file
