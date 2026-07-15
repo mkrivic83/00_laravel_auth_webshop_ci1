@@ -107,17 +107,12 @@ jobs:
           # 3. Spremanje u GitHub Environment kako bi je mogao koristiti u idućim koracima (ako zatreba)
           echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
-      # NOVO: Povećava MAJOR, MINOR ili PATCH prema početku commit poruke
+    # NOVO: Povećava MAJOR, MINOR ili PATCH prema početku commit poruke
       - name: Calculate semantic version
         if: success()
         shell: bash
         run: |
           COMMIT_MESSAGE="${{ github.event.head_commit.message }}"
-
-          CURRENT_VERSION=$(railway variables \
-            --service "00_laravel_auth_webshop_ci1" \
-            --environment "educ" \
-            --json | jq -r '.APP_VERSION')
 
           echo "Commit poruka: $COMMIT_MESSAGE"
           echo "Postojeća verzija: $CURRENT_VERSION"
