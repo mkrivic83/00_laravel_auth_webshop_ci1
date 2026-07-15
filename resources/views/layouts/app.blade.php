@@ -51,6 +51,7 @@
                 <span class="font-mono">{{ config('app.korisnik') }}</span>
                 &nbsp;|&nbsp;
 
+                <!-- DODAVANJE FEATUREA-->
                 <strong>Verzija:</strong>
                 <span class="font-mono">{{ config('app.version') }}</span>
 
@@ -61,7 +62,7 @@
 
                 <span class="mx-2">|</span>
 
-                <strong>Committtttt:</strong>
+                <strong>Commit:</strong>
                 <span class="font-mono">{{ config('app.commit') }}</span>
             </div>
         </footer>
