@@ -60,23 +60,6 @@ jobs:
           echo "APP_BUILD=educ-${{ github.run_number }}" >> "$GITHUB_ENV"
           echo "APP_COMMIT=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
 
-      
-
-
-      # NOVO: Čita VERSION datoteku iz Git repozitorija
-      - name: Read VERSION file
-        if: success()
-        shell: bash
-        run: |
-
-          CURRENT_VERSION=$(cat VERSION)
-
-          echo "Trenutna verzija: $CURRENT_VERSION"
-
-          echo "CURRENT_VERSION=$CURRENT_VERSION" >> $GITHUB_ENV
-
-
-
       # NOVO: Instalira Railway CLI
       - name: Install Railway CLI
         if: success()
