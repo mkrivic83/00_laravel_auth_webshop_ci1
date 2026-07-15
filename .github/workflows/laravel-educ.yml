@@ -65,6 +65,24 @@ jobs:
         if: success()
         run: npm install -g @railway/cli
 
+      # ZA KORAKE ŠTO RAIWLAY NUDI
+      - name: Railway Debug
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+
+          echo "===== VERSION ====="
+          railway --version
+
+          echo "===== VARIABLES ====="
+          railway variables
+
+          echo "===== ENV ====="
+          railway environment
+
+          echo "===== STATUS ====="
+          railway status
+
       # NOVO: Ažurira Railway environment varijable
       - name: Update Railway EDUC build number
         if: success()
