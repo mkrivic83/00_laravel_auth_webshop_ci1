@@ -66,20 +66,24 @@ jobs:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: |
 
-          echo "===== TEST 1 ====="
-          railway variable get \
+          echo "===== DOHVAĆANJE VARIJABLE ====="
+          
+          # 1. Dohvati JSON ispis svih varijabli i filtriraj samo APP_VERSION pomoću jq
+          APP_VERSION=$(railway variables \
             --service "00_laravel_auth_webshop_ci1" \
-            --environment "educ"
+            --environment "educ" \
+            --json | jq -r '.APP_VERSION')
+          
+          # 2. Provjera je li vrijednost uspješno pročitana
+          if [ "$APP_VERSION" = "null" ] || [ -z "$APP_VERSION" ]; then
+            echo "Greška: Varijabla APP_VERSION nije pronađena na Railwayu!"
+            exit 1
+          fi
 
-          echo "===== TEST 2 ====="
-          railway variable get \
-            --service "00_laravel_auth_webshop_ci1" \
-            --environment "educ" --json
-
-          echo "===== TEST 3 ====="
-          railway variable get \
-            --service "00_laravel_auth_webshop_ci1" \
-            --environment "educ" --kv
+          echo "Uspješno pročitana verzija: $APP_VERSION"
+          
+          # 3. Spremanje u GitHub Environment kako bi je mogao koristiti u idućim koracima (ako zatreba)
+          echo "APP_VERSION=$APP_VERSION" >> $GITHUB_ENV
 
 
       # NOVO: Čita VERSION datoteku iz Git repozitorija
