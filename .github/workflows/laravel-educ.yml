@@ -67,17 +67,17 @@ jobs:
         run: |
 
           echo "===== TEST 1 ====="
-          railway variable list \
+          railway variable get \
             --service "00_laravel_auth_webshop_ci1" \
             --environment "educ"
 
           echo "===== TEST 2 ====="
-          railway variable list \
+          railway variable get \
             --service "00_laravel_auth_webshop_ci1" \
             --environment "educ" --json
 
           echo "===== TEST 3 ====="
-          railway variable list \
+          railway variable get \
             --service "00_laravel_auth_webshop_ci1" \
             --environment "educ" --kv
 
