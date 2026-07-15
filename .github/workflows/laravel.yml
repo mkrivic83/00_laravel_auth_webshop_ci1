@@ -52,32 +52,6 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ":memory:"
         run: php artisan test
-
-
-         # NOVO: Automatski generira build broj nakon uspješnog CI-ja
-      - name: Generate EDUC build information
-        if: success()
-        run: |
-          echo "APP_BUILD=educ-${{ github.run_number }}" >> "$GITHUB_ENV"
-          echo "APP_COMMIT=${GITHUB_SHA::7}" >> "$GITHUB_ENV"
-
-        # NOVO: Instalacija Railway CLI alata
-      - name: Install Railway CLI
-        if: success()
-        run: npm install -g @railway/cli
-
-
-         # NOVO: Upis automatskog build broja u Railway EDUC environment
-      - name: Update Railway EDUC build number
-        if: success()
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          railway variable set \
-            --service "00_laravel_auth_webshop_ci1" \
-            --environment "educ" \
-            APP_BUILD="$APP_BUILD" \
-            APP_COMMIT="$APP_COMMIT"
             
         
       - name: CI uspješan
