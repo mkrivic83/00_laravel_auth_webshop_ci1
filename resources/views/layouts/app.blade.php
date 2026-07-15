@@ -57,6 +57,7 @@
 
                 <span class="mx-2">|</span>
 
+                <!-- DODAVANJE BREAKINGA-->
                 <strong>Build:</strong>
                 <span class="font-mono">{{ config('app.build') }}</span>
 
